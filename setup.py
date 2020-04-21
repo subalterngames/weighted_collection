@@ -8,8 +8,8 @@ setup(
     description="A WeightedCollection assigns probability weights per elements and returns elements randomly using those weights.",
     author="Seth Alter",
     author_email="subalterngames@gmail.com",
-    url="TODO", # TODO
-    download_url="TODO", # TODO
+    url="https://github.com/subalterngames/weighted_collection",
+    download_url="https://github.com/subalterngames/weighted_collection/archive/v1.0.tar.gz",
     keywords=["collection", "random"],
     install_requires=["numpy"],
     classifiers=[
