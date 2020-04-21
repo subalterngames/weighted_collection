@@ -1,13 +1,13 @@
-# weighted_collection
+# Weighted Collection
 
-A weighted collection has probability "weights" per element. The objects are always selected randomly.
+A WeightedCollection assigns probability weights per elements and returns elements randomly using those weights.
 
 For example: if "anakin" has a weight of 1, "constantine" a weight of 1, and "xenophon" a  weight of 2, then "xenophon" will be randomly selected 50% of the time, "anakin" 25% of the time, and "xenophon" 25% of the time.
 
 ## Usage
 
 ```python
-from weighted_collection import WeightedCollection
+from weighted_collection.weighted_collection import WeightedCollection
 
 w = WeightedCollection(obj_type=str)
 
