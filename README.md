@@ -28,7 +28,7 @@ Python 3.6+
 ## Installation
 
 ```python
-pip3 install weighted_collection
+pip3 install weighted-collection
 ```
 
 ## WeightedCollection API
