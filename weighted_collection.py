@@ -30,7 +30,7 @@ class WeightedCollection(Generic[T]):
     then "xenophon" will be randomly selected 50% of the time, "anakin" 25% of the time, and "xenophon" 25% of the time.
     """
 
-    def __init__(self, obj_type: Type[T], random_seed: int = 0):
+    def __init__(self, obj_type: Type[T] = object, random_seed: int = 0):
         """
         :param obj_type: The type of objects that can be added to the collection.
         :param random_seed: The random number generator seed.
@@ -48,7 +48,7 @@ class WeightedCollection(Generic[T]):
         :param obj: The object. Must not already be in the WeightedCollection.
         :param weight: The probability weight. Must be >0
 
-        :return: True if the object was added.
+        :return: True if the object was added to the collection.
         """
 
         if weight <= 0 or not isinstance(obj, self.obj_type):
@@ -63,15 +63,20 @@ class WeightedCollection(Generic[T]):
         self._objects.update({wo: self._weight})
         return True
 
-    def add_many(self, objs: Dict[T, int]) -> None:
+    def add_many(self, objs: Dict[T, int]) -> Dict[T, bool]:
         """
         Add many objects to the collection.
 
         :param objs: A dictionary of objects. Key = the object. Value = the probability weight (must be >0).
+
+        :return: A dictionary of each object and whether it was added to the collection.
         """
 
+        result: Dict[T, bool] = {}
+
         for obj in objs:
-            self.add(obj, objs[obj])
+            result.update({obj: self.add(obj, objs[obj])})
+        return result
 
     def remove(self, obj: T) -> bool:
         """
