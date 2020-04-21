@@ -2,7 +2,11 @@ from typing import TypeVar, Generic, Dict, Optional, Type
 import numpy as np
 
 
-T = TypeVar("T")
+class _WeightedGeneric:
+    """
+    A wrapper around a generic type to prevent it from being imported.
+    """
+    T = TypeVar("T")
 
 
 class _WeightedObject:
@@ -10,7 +14,7 @@ class _WeightedObject:
     An object with associated weighted probability.
     """
 
-    def __init__(self, obj: T, weight: int):
+    def __init__(self, obj: _WeightedGeneric.T, weight: int):
         """
         :param obj: The object.
         :param weight: The probability weight.
@@ -23,14 +27,14 @@ class _WeightedObject:
         return hash(self.obj)
 
 
-class WeightedCollection(Generic[T]):
+class WeightedCollection(Generic[_WeightedGeneric.T]):
     """
     A collection of objects. The objects are chosen randomly, but the randomness is "weighted".
     For example: if "anakin" has a weight of 1, "constantine" a weight of 1, and "xenophon" a  weight of 2,
     then "xenophon" will be randomly selected 50% of the time, "anakin" 25% of the time, and "xenophon" 25% of the time.
     """
 
-    def __init__(self, obj_type: Type[T] = object, random_seed: int = 0):
+    def __init__(self, obj_type: Type[_WeightedGeneric.T] = object, random_seed: int = 0):
         """
         :param obj_type: The type of objects that can be added to the collection.
         :param random_seed: The random number generator seed.
@@ -41,7 +45,7 @@ class WeightedCollection(Generic[T]):
         self._rng = np.random.RandomState(random_seed)
         self.obj_type = obj_type
 
-    def add(self, obj: T, weight: int) -> bool:
+    def add(self, obj: _WeightedGeneric.T, weight: int) -> bool:
         """
         Add an object to the collection.
 
@@ -63,7 +67,7 @@ class WeightedCollection(Generic[T]):
         self._objects.update({wo: self._weight})
         return True
 
-    def add_many(self, objs: Dict[T, int]) -> Dict[T, bool]:
+    def add_many(self, objs: Dict[_WeightedGeneric.T, int]) -> Dict[_WeightedGeneric.T, bool]:
         """
         Add many objects to the collection.
 
@@ -72,13 +76,13 @@ class WeightedCollection(Generic[T]):
         :return: A dictionary of each object and whether it was added to the collection.
         """
 
-        result: Dict[T, bool] = {}
+        result: Dict[_WeightedGeneric.T, bool] = {}
 
         for obj in objs:
             result.update({obj: self.add(obj, objs[obj])})
         return result
 
-    def remove(self, obj: T) -> bool:
+    def remove(self, obj: _WeightedGeneric.T) -> bool:
         """
         Remove an object from the collection.
 
@@ -104,7 +108,7 @@ class WeightedCollection(Generic[T]):
         self._weight = weight
         return True
 
-    def get(self) -> Optional[T]:
+    def get(self) -> Optional[_WeightedGeneric.T]:
         """
         :return: A randomly selected object using the probability weights per object.
         """
